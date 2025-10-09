@@ -7,8 +7,8 @@
 // @grant          none
 // @include        https://forticare.fortinet.com/CustomerSupport/SupportTeam/EditTicket.aspx*
 // @include        https://forticare.fortinet.com/CustomerSupport/SupportTeam/BrowseTicket.aspx*
-// @updateURL      https://raw.githubusercontent.com/Jinx1914/Fortinet-Tampermonkey/main/Forticare%20Escalation%20(No%20Internal%20Notes).js
-// @downloadURL    https://raw.githubusercontent.com/Jinx1914/Fortinet-Tampermonkey/main/Forticare%20Escalation%20(No%20Internal%20Notes).js
+// @updateURL      https://raw.githubusercontent.com/Jinx1914/Tampermonkey/refs/heads/main/Forticare%20Escalation.js
+// @downloadURL    https://raw.githubusercontent.com/Jinx1914/Tampermonkey/refs/heads/main/Forticare%20Escalation.js
 // ==/UserScript==
 
 $(document).ready(function () {
@@ -180,4 +180,5 @@ $(document).ready(function () {
     }
   });
 });
+
 
