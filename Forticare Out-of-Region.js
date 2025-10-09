@@ -7,8 +7,8 @@
 // @grant        none
 // @include      https://forticare.fortinet.com/CustomerSupport/SupportTeam/EditTicket.aspx*
 // @include      https://forticare.fortinet.com/CustomerSupport/SupportTeam/BrowseTicket.aspx*
-// @updateURL    https://raw.githubusercontent.com/Jinx1914/Tampermonkey/refs/heads/main/Forticare%20Out-of-Region.js
-// @downloadURL  https://raw.githubusercontent.com/Jinx1914/Tampermonkey/refs/heads/main/Forticare%20Out-of-Region.js
+// @updateURL    https://github.com/Jinx1914/Fortinet-Tampermonkey/raw/refs/heads/main/Forticare%20Out-of-Region%20(No%20+-%20Buttons,%20No%20internal%20notes)%20-%20Copy.js
+// @downloadURL  https://github.com/Jinx1914/Fortinet-Tampermonkey/raw/refs/heads/main/Forticare%20Out-of-Region%20(No%20+-%20Buttons,%20No%20internal%20notes)%20-%20Copy.js
 // ==/UserScript==
 
 'use strict';
@@ -209,7 +209,7 @@ $(document).ready(function () {
         const final=vals.join('\t');
         navigator.clipboard.writeText(final).then(()=>{
             setTimeout(()=>{
-                alert("The ticket will be recorded as internal notes; Kindly paste the copied data into the Excel form dated for today.");
+                alert("Data copied! Please paste the copied data into today’s Excel form.");
                 hideModal(); window.open(SHAREPOINT_LINK,'_blank');
                 if(typeof __doPostBack==='function'){__doPostBack('ctl00$MainContent$LB_Submit','');}
                 else {$('#ctl00_MainContent_LB_Submit').click();}
@@ -238,4 +238,3 @@ $(document).ready(function () {
     addDataCaptureButton();
     new MutationObserver(addDataCaptureButton).observe(document.body,{childList:true,subtree:true});
 });
-
