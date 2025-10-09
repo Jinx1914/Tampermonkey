@@ -45,9 +45,10 @@ $(document).ready(function () {
         #dataCaptureForm label { display:block; margin-bottom:4px; font-weight:600; font-size:14px; color:#333; }
         #dataCaptureForm input, #dataCaptureForm select { width:100%; padding:8px; box-sizing:border-box; border:1px solid #ddd; border-radius:6px; font-size:14px; background-color:#fff; }
         #dataCaptureForm .button-group { display:flex; margin-top:15px; }
-        #dataCaptureForm button { padding:10px 15px; border:none; border-radius:6px; cursor:pointer; font-weight:600; font-size:14px; flex:1; }
+        #dataCaptureForm button { padding:10px 15px; border:none; border-radius:6px; cursor:pointer; font-weight:600; font-size:14px; flex:1;}
         #dataCaptureForm #submitData { background-color:#28aa45; color:#fff; margin-right:8px; }
         #dataCaptureForm #closeData { background-color:#dc3545; color:#fff; margin-left:8px; }
+        #dataCaptureButton:hover {  background-color: #2ECC71 !important; color: #fff !important; border-color: transparent}
 
         /* Remove dropdown arrow from Country field */
         #country::-webkit-calendar-picker-indicator,
