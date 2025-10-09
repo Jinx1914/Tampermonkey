@@ -7,6 +7,8 @@
 // @grant        none
 // @include      https://forticare.fortinet.com/CustomerSupport/SupportTeam/EditTicket.aspx*
 // @include      https://forticare.fortinet.com/CustomerSupport/SupportTeam/BrowseTicket.aspx*
+// @updateURL    https://raw.githubusercontent.com/Jinx1914/Tampermonkey/refs/heads/main/Forticare%20Loadstat.js
+// @downloadURL  https://raw.githubusercontent.com/Jinx1914/Tampermonkey/refs/heads/main/Forticare%20Loadstat.js
 // ==/UserScript==
 
 'use strict';
@@ -283,3 +285,4 @@ $(document).ready(function () {
     }
 
 });
+
