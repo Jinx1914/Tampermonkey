@@ -29,6 +29,8 @@ $(document).ready(function () {
       #submitEscalation { background: #28a745; color: #fff; font-weight: bold; padding: 10px 16px; border-radius: 8px; border: none; width: 100%; margin-top: 10px; cursor: pointer; font-size: 15px; transition: background 0.2s; }
       #submitEscalation:hover { background: #218838; }
       .escalate-invalid { border-color: red !important; background: #ffe6e6; }
+      #escalateButton:hover { background-color: #2ECC71 !important; color: #fff !important; border-color: transparent;}
+      #escalateButton {margin: 4px;}
 
       /* Banner styles (bottom-center) */
       #escalationBanner { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #FF5722; color: #fff; padding: 16px 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); font-family: 'Segoe UI', sans-serif; max-width: 350px; min-width: 250px; display: flex; flex-direction: column; gap: 4px; word-wrap: break-word; white-space: normal; z-index: 10000; font-size: 14px; line-height: 1.4; max-height: 70vh; overflow-y: auto; }
