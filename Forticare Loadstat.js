@@ -69,11 +69,12 @@ $(document).ready(function () {
 
         /* ✅ Added only these two rules below */
         #loadstatButton {
-            margin-left: 5px !important;
+            margin: 5px;
         }
         #loadstatButton:hover {
             background-color: #2ECC71 !important;
             color: #fff !important;
+            border-color: transparent;
         }
     `;
     $('head').append(`<style>${loadstatStyle}</style>`);
