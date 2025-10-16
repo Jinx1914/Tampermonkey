@@ -47,7 +47,8 @@ $(document).ready(function () {
         "Denice De Guzman": "Denice",
         "Jeric Añonuevo": "Jeric",
         "Franklin Terence Conag": "Franklin",
-        "Aaron Chu": "Aaron"
+        "Aaron Chu": "Aaron",
+        "Carnil Anthony De Lara": "Carnil"
     };
     // ----------------------------------------------------
 
@@ -126,7 +127,7 @@ $(document).ready(function () {
                 <div class="form-group"><label for="loadstatTicketTitle">Ticket Title:</label><input type="text" id="loadstatTicketTitle" readonly required></div>
                 <div class="form-group"><label for="loadstatPriority">Priority:</label><input type="text" id="loadstatPriority" readonly required></div>
                 <div class="form-group"><label for="loadstatCompanyName">Company Name:</label><input type="text" id="loadstatCompanyName" readonly required></div>
-                <div class="form-group"><label for="loadstatModel">Model:</label><input type="text" id="loadstatModel" readonly required></div>
+                <div class="form-group"><label for="loadstatModel">Model:</label><input type="text" id="loadstatModel" required></div>
                 <div class="form-group"><label for="loadstatCountry">Country:</label><input type="text" id="loadstatCountry" maxlength="30" list="loadstatCountryHistory" required></div>
                 <datalist id="loadstatCountryHistory"></datalist>
                 <div class="form-group"><label for="loadstatComments">Comments:</label><textarea id="loadstatComments" placeholder="Enter comments here..."></textarea></div>
@@ -285,13 +286,19 @@ $('#ftsToggle').on('change', function () {
             alert("✅ Data copied! Now, Paste directly into Excel.");
             hideLoadstatModal();
             window.open(SHAREPOINT_LINK, '_blank');
+            location.reload();
         }).catch(() => {
             alert("⚠️ Copy failed. Please copy manually:\n\n" + finalData);
             hideLoadstatModal();
+            location.reload();
         });
     });
 
     $('#closeLoadstat, #loadstatBackdrop').on('click', hideLoadstatModal);
+
+    $('#closeLoadstat').on('click', function () {
+    location.reload(); // Refreshes the current tab when Cancel/Close is clicked
+    });
 
     function addLoadstatButton() {
         const escalateBtn = $('#escalateButton');
