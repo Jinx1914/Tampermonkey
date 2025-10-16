@@ -186,7 +186,7 @@ $('#ftsToggle').on('change', function () {
         const ticketNumber = fullText.replace(/\D/g, ''); // <-- digits-only extraction (keeps only numbers)
         $('#loadstatTicketNumber').val(ticketNumber);
 
-        const currentOwner = $('#ctl00_MainContent_LB_CurrentOwner').text().trim();
+        const currentOwner = $('#ctl00_LabelUserName').text().trim();
         if (currentOwner) $('#loadstatEngrName').val(currentOwner);
 
         const ticketTitle = $('#ctl00_MainContent_TB_TicketTitle').val()?.trim() || '';
