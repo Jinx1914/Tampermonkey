@@ -17,6 +17,40 @@ $(document).ready(function () {
 
     const SHAREPOINT_LINK = 'https://fortinet.sharepoint.com/sites/APACLoadStat/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=x64b7c&CID=f588e06d%2D1a5b%2D42f2%2D928a%2D60e6c41caa0a&FolderCTID=0x012000DE297452E6640B4EA6AA9520F3DF0077&id=%2Fsites%2FAPACLoadStat%2FShared%20Documents%2FAPAC%20Load%20Stat';
 
+    // ---------- ONLY ADDITION: nickname mapping ----------
+    const SHORT_NAMES = {
+        "Ricky Tanagras": "Ricky",
+        "John Michael Lim": "John Michael",
+        "Stephen Yao": "Stephen",
+        "Jezza Paula Hernandez": "Jezza",
+        "Jackquelyn Era": "Jackque",
+        "Ronmar Galvez": "Ronmar",
+        "Sherman Joseph Pasquil": "Sherman",
+        "Aristeo Quilingan": "Aris",
+        "Ruther Ivan Bernal": "Ivan",
+        "Mar Pugahac": "Mar",
+        "Nico Angelo Abanes": "Nico",
+        "Pearl Angelica Chavez": "Pearl",
+        "Innah Valerie Bituya": "Innah",
+        "Lars Rayson Bollas": "Lars",
+        "Elmer Malayan": "Elmer",
+        "Arnold Dimailig": "Arnold",
+        "Paulo Dela Pena": "Pau",
+        "Jeferson Bernabe": "Jef",
+        "Reynante Aureada": "Rey",
+        "Constantin Avellano": "Noti",
+        "Reybin Villaroman": "Reybin",
+        "Jordan Clar": "Jordan",
+        "Kristelle Corinne Andawi": "Corinne",
+        "Ryan Jose": "Ryan",
+        "Franco Dettori Santos": "Franco",
+        "Denice De Guzman": "Denice",
+        "Jeric Añonuevo": "Jeric",
+        "Franklin Terence Conag": "Franklin",
+        "Aaron Chu": "Aaron"
+    };
+    // ----------------------------------------------------
+
     function cleanForExcel(v) {
         return (v || '').toString().replace(/[\r\n]+/g, ' ').trim();
     }
@@ -132,21 +166,24 @@ $(document).ready(function () {
     const loadstatFormModal = $('#loadstatForm');
     const waitPrompt = $('#loadstatWaitPrompt');
 
-    $('#ftsToggle').on('change', function () {
-        if (this.checked) {
-            $('#ftsFields').slideDown(200);
-            $('#ftsFields select, #ftsFields input').prop('required', true);
-            loadstatFormModal.addClass('scrollable');
-        } else {
-            $('#ftsFields').slideUp(200);
-            $('#ftsFields select, #ftsFields input').prop('required', false);
-            loadstatFormModal.removeClass('scrollable');
-        }
-    });
+$('#ftsToggle').on('change', function () {
+    if (this.checked) {
+        $('#ftsFields').slideDown(200);
+        // Only region and ownership are required; start/end time are optional
+        $('#loadstatFtsRegion, #loadstatFtsOwnership').prop('required', true);
+        $('#loadstatStartTime, #loadstatEndTime, #loadstatStartAmPm, #loadstatEndAmPm').prop('required', false);
+        loadstatFormModal.addClass('scrollable');
+    } else {
+        $('#ftsFields').slideUp(200);
+        $('#ftsFields select, #ftsFields input').prop('required', false);
+        loadstatFormModal.removeClass('scrollable');
+    }
+});
+
 
     function showLoadstatModal() {
         const fullText = $('#ctl00_MainContent_UC_NotePadMessage_L_TicketId').text();
-        const ticketNumber = fullText.replace('Ticket Number:', '').replace('(refresh)', '').trim();
+        const ticketNumber = fullText.replace(/\D/g, ''); // <-- digits-only extraction (keeps only numbers)
         $('#loadstatTicketNumber').val(ticketNumber);
 
         const currentOwner = $('#ctl00_MainContent_LB_CurrentOwner').text().trim();
@@ -186,7 +223,10 @@ $(document).ready(function () {
     }
 
     $('#loadstatStartTime,#loadstatEndTime').on('blur keyup', function (e) {
-        if (e.type === 'blur' || e.key === 'Enter') $(this).val(formatTimeLoadstat($(this).val()));
+        const val = $(this).val().trim();
+        if (val) {
+            if (e.type === 'blur' || e.key === 'Enter') $(this).val(formatTimeLoadstat(val));
+        }
     });
 
     // ✅ Excel Copy Logic with Tab Skips
@@ -194,9 +234,21 @@ $(document).ready(function () {
         e.preventDefault();
 
         const isFTSChecked = $('#ftsToggle').is(':checked');
+
+        // ✅ Only add AM/PM if time has value
+        const startTime = $('#loadstatStartTime').val().trim();
+        const startAmPm = startTime ? $('#loadstatStartAmPm').val() : '';
+        const endTime = $('#loadstatEndTime').val().trim();
+        const endAmPm = endTime ? $('#loadstatEndAmPm').val() : '';
+
+        // ---------- ONLY CHANGE: replace owner full name with short name ----------
+        let ownerName = $('#loadstatEngrName').val().trim();
+        if (SHORT_NAMES[ownerName]) ownerName = SHORT_NAMES[ownerName];
+        // -----------------------------------------------------------------------
+
         const vals = [
             $('#loadstatTicketNumber').val(),    // Skip 3
-            $('#loadstatEngrName').val(),
+            ownerName,
             $('#loadstatTicketTitle').val(),
             $('#loadstatPriority').val(),        // Skip 3
             $('#loadstatCompanyName').val(),     // Skip 2
@@ -205,8 +257,8 @@ $(document).ready(function () {
             $('#loadstatComments').val(),
             isFTSChecked ? $('#loadstatFtsRegion').val() : '',
             isFTSChecked ? $('#loadstatFtsOwnership').val() : '',
-            isFTSChecked ? ($('#loadstatStartTime').val() + ' ' + $('#loadstatStartAmPm').val()) : '',
-            isFTSChecked ? ($('#loadstatEndTime').val() + ' ' + $('#loadstatEndAmPm').val()) : ''
+            isFTSChecked ? (startTime ? (startTime + (startAmPm ? ' ' + startAmPm : '')) : '') : '',
+            isFTSChecked ? (endTime ? (endTime + (endAmPm ? ' ' + endAmPm : '')) : '') : ''
         ].map(cleanForExcel);
 
         // Insert tab skips
@@ -285,4 +337,3 @@ $(document).ready(function () {
     }
 
 });
-
