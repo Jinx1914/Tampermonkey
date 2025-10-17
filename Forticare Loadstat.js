@@ -81,7 +81,7 @@ $(document).ready(function () {
             background-color:#f5f5f5; transition:border-color 0.2s, box-shadow 0.2s;
         }
         #loadstatForm input:focus, #loadstatForm select:focus, #loadstatForm textarea:focus {
-            border-color:#9ACD32; outline:none; box-shadow:0 0 0 2px rgba(178,223,219,0.5); background-color:#fff;
+            border-color:#28a745; outline:none; box-shadow:0 0 0 2px rgba(178,223,219,0.5); background-color:#fff;
         }
         #loadstatForm textarea { resize:vertical; min-height:70px; max-height:130px; }
         .section-divider { margin:15px 0 10px 0; padding:5px 0; display:flex; justify-content:center; align-items:center; }
@@ -300,14 +300,23 @@ $('#ftsToggle').on('change', function () {
     location.reload(); // Refreshes the current tab when Cancel/Close is clicked
     });
 
-    function addLoadstatButton() {
-        const escalateBtn = $('#escalateButton');
-        if (escalateBtn.length && !$('#loadstatButton').length) {
-            $('<button id="loadstatButton" type="button">Loadstat</button>')
-                .insertAfter(escalateBtn)
-                .on('click', showLoadstatModal);
+function addLoadstatButton() {
+    const container = $('#ctl00_MainContent_UC_AddComment_L_comment');
+    if (container.length && $('#loadstatButton').length === 0) {
+        // Insert Loadstat button right after the Out-of-Region button if it exists
+        if ($('#dataCaptureButton').length) {
+            $('#dataCaptureButton').after('<button id="loadstatButton" type="button">Loadstat</button>');
+        } else {
+            // If Out-of-Region button not present, prepend Loadstat button
+            container.prepend('<button id="loadstatButton" type="button">Loadstat</button>');
         }
+        $('#loadstatButton').on('click', showLoadstatModal);
     }
+}
+    addLoadstatButton();
+    new MutationObserver(addLoadstatButton).observe(document.body, { childList: true, subtree: true });
+
+
 
     addLoadstatButton();
     new MutationObserver(addLoadstatButton).observe(document.body, { childList: true, subtree: true });
