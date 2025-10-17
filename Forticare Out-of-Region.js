@@ -253,7 +253,7 @@ $(document).ready(function () {
     const addDataCaptureButton=()=> {
         const label=$('#ctl00_MainContent_UC_AddComment_L_comment');
         if(label.length && $('#dataCaptureButton').length===0){
-            label.prepend('<button id="dataCaptureButton" type="button" style="margin-left:5px;">Out-of-Region</button>');
+            label.prepend('<button id="dataCaptureButton" type="button" style="margin:5px;">Out-of-Region</button>');
         }
     };
     addDataCaptureButton();
