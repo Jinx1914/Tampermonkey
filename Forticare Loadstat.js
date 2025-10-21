@@ -8,7 +8,7 @@
 // @include      https://forticare.fortinet.com/CustomerSupport/SupportTeam/EditTicket.aspx*
 // @include      https://forticare.fortinet.com/CustomerSupport/SupportTeam/BrowseTicket.aspx*
 // @updateURL    https://raw.githubusercontent.com/Jinx1914/Tampermonkey/refs/heads/main/Forticare%20Loadstat.js
-// @downloadURL  https://raw.githubusercontent.com/Jinx1914/Tampermonkey/refs/heads/main/Forticare%20Loadstat.js
+// @downloadURL  https://raw.githubusercontent.com/Jinx1914/Tampermonkey/refs/heads/main/Fo rticare%20Loadstat.js
 // ==/UserScript==
 
 'use strict';
@@ -59,13 +59,20 @@ $(document).ready(function () {
     const loadstatStyle = `
         #loadstatBackdrop { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.3); z-index:9998; }
         #loadstatForm {
-            display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
-            background:#fff; padding:18px 25px; border-radius:8px;
-            box-shadow:0 6px 18px rgba(0,0,0,0.1); z-index:9999; width:450px;
-            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            max-height:85vh; overflow-x:hidden; overflow-y:hidden;
-            border:1px solid #dcdcdc; box-sizing: border-box;
-        }
+    display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+    background:#fff; padding:18px 25px; border-radius:8px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.1); z-index:9999; width:450px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-height:85vh; overflow-x:hidden; overflow-y:hidden; /* default: hidden */
+    border:1px solid #dcdcdc; box-sizing:border-box;
+}
+
+/* ✅ When form expands beyond viewport OR on small screens, allow scrolling */
+@media (max-height: 700px), (max-width: 480px) {
+    #loadstatForm {
+        overflow-y:auto;
+    }
+}
         #loadstatForm.scrollable { overflow-y:auto; }
         #loadstatForm #loadstatFormTitle {
             background-color:#28aa45; color:#fff; padding:12px 0;
@@ -243,8 +250,15 @@ $('#ftsToggle').on('change', function () {
         const endAmPm = endTime ? $('#loadstatEndAmPm').val() : '';
 
         // ---------- ONLY CHANGE: replace owner full name with short name ----------
-        let ownerName = $('#loadstatEngrName').val().trim();
-        if (SHORT_NAMES[ownerName]) ownerName = SHORT_NAMES[ownerName];
+let ownerNameInput = $('#loadstatEngrName').val().trim().replace(/\s+/g, ' ').toLowerCase();
+let foundShortName = null;
+for (const [fullName, shortName] of Object.entries(SHORT_NAMES)) {
+    if (fullName.toLowerCase() === ownerNameInput) {
+        foundShortName = shortName;
+        break;
+    }
+}
+let ownerName = foundShortName || $('#loadstatEngrName').val().trim();
         // -----------------------------------------------------------------------
 
         const vals = [
