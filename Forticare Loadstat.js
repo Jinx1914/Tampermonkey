@@ -48,7 +48,7 @@ $(document).ready(function () {
         "Jeric Añonuevo": "Jeric",
         "Franklin Terence Conag": "Franklin",
         "Aaron Chu": "Aaron",
-        "Carnil Anthony De Lara": "Carnil"
+        "Carnil De Lara": "Carnil"
     };
     // ----------------------------------------------------
 
@@ -162,7 +162,7 @@ $(document).ready(function () {
                 </div>
 
                 <div class="button-group">
-                    <button type="submit" id="submitLoadstat">Proceed to Sharepoint</button>
+                    <button type="submit" id="submitLoadstat">Copy & Open Sharepoint</button>
                     <button type="button" id="closeLoadstat">Cancel</button>
                 </div>
             </form>
